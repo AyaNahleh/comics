@@ -1,14 +1,33 @@
 import 'package:flutter/material.dart';
-class DetailPage extends StatelessWidget {
-  const DetailPage({Key? key}) : super(key: key);
+import 'package:comic_viewer_app/Services.dart';
+
+
+
+class DetailPage extends StatefulWidget {
+   DetailPage({this.detailItem,this.iteamcount});
+   final detailItem;
+   final iteamcount;
 
   @override
+  State<DetailPage> createState() => _DetailPageState();
+}
+
+class _DetailPageState extends State<DetailPage> {
+
+
+
+
+
+
+  @override
+
   Widget build(BuildContext context) {
+
     return Scaffold(
       appBar: AppBar(
-        title: Text('detail'),
+        title: Text('D'),
       ),
-      body: Container(),
+      body: SizedBox(),
     );
   }
 }

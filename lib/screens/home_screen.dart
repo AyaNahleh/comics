@@ -1,10 +1,41 @@
 import 'package:comic_viewer_app/screens/favorite_screen.dart';
 import 'package:flutter/material.dart';
-import 'package:comic_viewer_app/screens/detail_screen.dart';
-import 'package:comic_viewer_app/screens/favorite_screen.dart';
+import 'package:comic_viewer_app/GetCurrentItem.dart';
+import 'package:flutter_spinkit/flutter_spinkit.dart';
 
-class MyHomePage extends StatelessWidget {
-  const MyHomePage({Key? key}) : super(key: key);
+class MyHomePage extends StatefulWidget {
+  @override
+  State<MyHomePage> createState() => _MyHomePageState();
+}
+
+class _MyHomePageState extends State<MyHomePage> {
+  String num = '';
+  String name = '';
+  String image = '';
+  bool loading = false;
+  int a = 0;
+  bool b = true;
+
+  var currentItem = CurrentItem();
+
+  @override
+  void initState() {
+    getCurrentData(a);
+    super.initState();
+  }
+
+  void getCurrentData(int s) async {
+    var currentData = await currentItem.getCurrentItem(b, s);
+    setState(() {
+      b = false;
+      name = currentData['title'];
+      num = currentData['num'].toString();
+      a = currentData['num'].toInt();
+
+      image = currentData['img'];
+      loading = true;
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -20,17 +51,21 @@ class MyHomePage extends StatelessWidget {
         actions: [
           IconButton(
             onPressed: () {
-              Navigator.push(context, MaterialPageRoute(builder: (context)=>FavoriteScreen()));
+              Navigator.push(context,
+                  MaterialPageRoute(builder: (context) => FavoriteScreen()));
             },
-            icon: const Icon(Icons.heart_broken_rounded,color: Colors.red,
-            size: 40,),
+            icon: const Icon(
+              Icons.heart_broken_rounded,
+              color: Colors.red,
+              size: 40,
+            ),
           ),
         ],
       ),
       body: SingleChildScrollView(
         scrollDirection: Axis.vertical,
         child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
+          crossAxisAlignment: CrossAxisAlignment.center,
           children: [
             Container(
               height: size.height * 0.27,
@@ -78,7 +113,7 @@ class MyHomePage extends StatelessWidget {
                     ),
                   ),
                   Container(
-                    padding: EdgeInsets.only(left: 10, top: 30),
+                    padding: const EdgeInsets.only(left: 10, top: 30),
                     child: const Text(
                       'welcome !!',
                       style: TextStyle(
@@ -91,113 +126,89 @@ class MyHomePage extends StatelessWidget {
                 ],
               ),
             ),
-            Container(
-              padding: EdgeInsets.all(10),
-              child: const Text(
-                "what's new",
-                style: TextStyle(
-                    color: Colors.black,
-                    fontWeight: FontWeight.bold,
-                    fontSize: 25),
-              ),
-            ),
-            const SizedBox(
-              height: 20,
-            ),
-            viewer_item(),
-            const SizedBox(
-              height: 20,
-            ),
-            Container(
-              padding: EdgeInsets.all(10),
-              child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    const Text(
-                      "We have all different types",
-                      style: TextStyle(
-                          color: Colors.black,
-                          fontWeight: FontWeight.bold,
-                          fontSize: 20),
+            loading
+                ? Container(
+                    margin: const EdgeInsets.symmetric(
+                        horizontal: 20, vertical: 30),
+                    width: double.infinity,
+                    height: 350,
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        SizedBox(
+                          width: double.infinity,
+                          height: 200,
+                          child: FittedBox(
+                            fit: BoxFit.contain,
+                            child: Image.network(
+                              image,
+                            ),
+                          ),
+                        ),
+                        const SizedBox(
+                          height: 20,
+                        ),
+                        Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Text(
+                              name,
+                              style: TextStyle(fontSize: 20),
+                            ),
+                            Text(
+                              num,
+                              style: TextStyle(fontSize: 25),
+                            ),
+                          ],
+                        ),
+                        const SizedBox(
+                          height: 15,
+                        ),
+                        IconButton(
+                            onPressed: () {
+                              setState(() {
+                                a--;
+                                loading = false;
+                                getCurrentData(a);
+                              });
+                            },
+                            icon: Icon(Icons.arrow_back_outlined))
+                      ],
                     ),
-                    ElevatedButton(
-                      onPressed: () {
-                        Navigator.push(context, MaterialPageRoute(builder:  (context)=>FavoriteScreen()));
-                      },
-                      child: Text('more'),
-                      style: ButtonStyle(
-                        backgroundColor:
-                            MaterialStateProperty.all(Colors.amber),
-                      ),
-                    )
-                  ]),
-            ),
-            SingleChildScrollView(
-              scrollDirection: Axis.horizontal,
-              child: Row(
-                children: [
-                  viewer_item(),
-                  viewer_item(),
-                  viewer_item(),
-                  viewer_item(),
-                ],
-              ),
-            ),
-
-
+                  )
+                : const SpinKitDoubleBounce(
+                    color: Colors.black,
+                    size: 100,
+                  ),
           ],
         ),
       ),
-
-    );
-  }
-}
-
-class viewer_item extends StatefulWidget {
-  const viewer_item({
-    Key? key,
-  }) : super(key: key);
-
-  @override
-  State<viewer_item> createState() => _viewer_itemState();
-}
-
-class _viewer_itemState extends State<viewer_item> {
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      margin: const EdgeInsets.only(left: 10, right: 10, bottom: 10),
-      height: 150,
-      width: 100,
-      decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(20),
-          color: Colors.white,
-          boxShadow: const [
-            BoxShadow(offset: Offset(3, 7), color: Colors.grey, blurRadius: 10)
-          ]),
-      child: GestureDetector(
-        onTap: () {
-          Navigator.push(context,MaterialPageRoute(builder: (context)=> DetailPage()));
-        },
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Image.network(
-              'https://picsum.photos/250?image=9',
-            ),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                Text('name'),
-                Icon(
-                  Icons.arrow_forward_outlined,
-                  size: 20,
-                )
-              ],
-            ),
-            Text('num')
-          ],
-        ),
+      bottomNavigationBar: BottomNavigationBar(
+        iconSize: 30,
+        backgroundColor: Colors.white,
+        items: const [
+          BottomNavigationBarItem(
+              icon: Icon(
+                Icons.add,
+                color: Colors.black45,
+              ),
+              label: ''),
+          BottomNavigationBarItem(
+              icon: Icon(
+                Icons.person,
+                color: Colors.black45,
+              ),
+              label: ''),
+          BottomNavigationBarItem(
+              icon: Icon(
+                Icons.favorite,
+                color: Colors.red,
+              ),
+              label: ''),
+        ],
+        currentIndex: 0,
+        selectedItemColor: Colors.amber[800],
+        onTap: (val) {},
       ),
     );
   }
