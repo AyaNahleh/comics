@@ -153,7 +153,7 @@ class _MyHomePageState extends State<MyHomePage> {
                               ? ScaffoldMessenger.of(context).showSnackBar(
                                   SnackBar(
                                     content: const Text(
-                                      'error number',
+                                      'unvalid number',
                                       style: TextStyle(color: Colors.black),
                                     ),
                                     duration: const Duration(seconds: 10),
