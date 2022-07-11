@@ -4,6 +4,7 @@ A new Flutter project.
 
 ## Getting Started
 about requirements:
+
 -user can browse through the comics.
 
 -user can also see the comic details, including its description, by tapp on the comics.
