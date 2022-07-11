@@ -32,22 +32,6 @@ class _DetailPageState extends State<DetailPage> {
   String month='';
 
 
-  // Future getExplain(int number) async {
-  //   try {
-  //     var explanationItem = await currentItem.getExplanation(num);
-  //     setState(() {
-  //       isFound = true;
-  //
-  //       number = explanationItem;
-  //     });
-  //     return explanationItem;
-  //   } catch (e) {
-  //     setState(() {
-  //       isFound = false;
-  //     });
-  //   }
-  // }
-
   @override
   void initState() {
     updateItem();
@@ -125,9 +109,15 @@ class _DetailPageState extends State<DetailPage> {
               const SizedBox(
                 height: 20,
               ),
-              Image.network(
-                image,
-                width: double.infinity,
+              InteractiveViewer(
+
+                child: AspectRatio(
+                  aspectRatio: 1,
+                  child: Image.network(
+                    image,
+                    width: double.infinity,
+                  ),
+                ),
               ),
               const SizedBox(
                 height: 10,
@@ -212,7 +202,7 @@ final String nameDescription;
   @override
   Widget build(BuildContext context) {
     return Container(
-      padding: EdgeInsets.all(10),
+      padding: const EdgeInsets.all(10),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [

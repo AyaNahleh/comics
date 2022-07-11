@@ -15,66 +15,62 @@ class _FavoriteScreenState extends State<FavoriteScreen> {
     List favoriteItemDetail=widget.favoriteItem;
     return Scaffold(
       appBar: AppBar(
-        title: Text('Favorite'),
+        title: const Text('Favorite'),
       ),
-      body: Container(
-        child: ListView.builder(
-          itemCount: favoriteItemDetail.length,
-            scrollDirection: Axis.vertical,
-            physics: const BouncingScrollPhysics(),
-            itemBuilder: (BuildContext context, int index){
-            String name =favoriteItemDetail[index]['title'];
-            String image=favoriteItemDetail[index]['img'];
-            return Container(
-              height: 100,
-              width: 100,
-              padding: EdgeInsets.all(10),
-              child: GestureDetector(
-                onTap: (){
-                  Navigator.push(context, MaterialPageRoute(builder: (context) {
-                    return DetailPage(
-                      detailItem: favoriteItemDetail[index],
-                    );
-                  }));
-                },
-                child: Card(
-                  shadowColor: Colors.grey ,
+      body: ListView.builder(
+        itemCount: favoriteItemDetail.length,
+          scrollDirection: Axis.vertical,
+          physics: const BouncingScrollPhysics(),
+          itemBuilder: (BuildContext context, int index){
+          String name =favoriteItemDetail[index]['title'];
+          String image=favoriteItemDetail[index]['img'];
+          return Container(
+            height: 100,
+            width: 100,
+            padding: const EdgeInsets.all(10),
+            child: GestureDetector(
+              onTap: (){
+                Navigator.push(context, MaterialPageRoute(builder: (context) {
+                  return DetailPage(
+                    detailItem: favoriteItemDetail[index],
+                  );
+                }));
+              },
+              child: Card(
+                shadowColor: Colors.grey ,
 
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceAround,
-                    children: [
-                      Container(
-                        width: 70,
-                        height: double.infinity,
-                        child: FittedBox(
-                          fit: BoxFit.contain,
-                          child: Image.network(image),
-                        ),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceAround,
+                  children: [
+                    SizedBox(
+                      width: 70,
+                      height: double.infinity,
+                      child: FittedBox(
+                        fit: BoxFit.contain,
+                        child: Image.network(image),
                       ),
-                      const SizedBox(
-                        width: 20,
-                      ),
-                      Text(name,style: const TextStyle(
-                        fontSize: 15,
-                        fontWeight: FontWeight.bold,
-                      ),
-                      ),
-                      IconButton(onPressed: (){
-                        setState((){
-                          favoriteItemDetail.removeAt(index);
-                        });
-
-
-                      }, icon: Icon(
-                        Icons.delete
-                      ),),
-                    ],
-                  ),
+                    ),
+                    const SizedBox(
+                      width: 20,
+                    ),
+                    Text(name,style: const TextStyle(
+                      fontSize: 15,
+                      fontWeight: FontWeight.bold,
+                    ),
+                    ),
+                    IconButton(onPressed: (){
+                      setState((){
+                        favoriteItemDetail.removeAt(index);
+                      });
+                    }, icon: const Icon(
+                      Icons.delete
+                    ),),
+                  ],
                 ),
               ),
-            );
-            }
-        ),
+            ),
+          );
+          }
       ),
     );
   }

@@ -179,10 +179,7 @@ class _MyHomePageState extends State<MyHomePage> {
                       ),
                     ),
                   ),
-                  Container(
-
-                    child:  Image.asset('assets/app_icon.png',width: 160,height: 130,)
-                  )
+                  Image.asset('assets/app_icon.png',width: 160,height: 130,)
                 ],
               ),
             ),
@@ -271,7 +268,7 @@ class _MyHomePageState extends State<MyHomePage> {
       ),
       bottomNavigationBar: BottomNavigationBar(
         iconSize: 30,
-        backgroundColor: Color(0xFFB71C1C),
+        backgroundColor: const Color(0xFFB71C1C),
         items: [
           const BottomNavigationBarItem(
               icon: Icon(

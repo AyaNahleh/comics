@@ -8,7 +8,7 @@ class CurrentItem {
   Future getExplanation(String itemNumber)async{
     String title='';
     try {
-      var url = Uri.parse('https://www.explainxkcd.com/wiki/index.php/'+ itemNumber);
+      var url = Uri.parse('https://www.explainxkcd.com/wiki/index.php/$itemNumber');
       final res = await http.get(url);
       dom.Document document = parser.parse(res.body);
 
@@ -33,7 +33,7 @@ class CurrentItem {
     return itemData;
   }
   catch (e){
-      print('error1');
+      print('cant load comic');
   }
   }
 
