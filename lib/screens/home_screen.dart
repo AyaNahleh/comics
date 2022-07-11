@@ -3,6 +3,7 @@ import 'package:comic_viewer_app/get_current_Item.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:comic_viewer_app/screens/detail_screen.dart';
 import 'package:string_validator/string_validator.dart';
+import 'package:flutter/services.dart';
 import 'package:comic_viewer_app/screens/favorite_screen.dart';
 
 class MyHomePage extends StatefulWidget {
@@ -90,6 +91,7 @@ class _MyHomePageState extends State<MyHomePage> {
 
   @override
   Widget build(BuildContext context) {
+    SystemChrome.setEnabledSystemUIMode(SystemUiMode.manual, overlays: SystemUiOverlay.values);
     Size size = MediaQuery.of(context).size;
     return Scaffold(
       backgroundColor: Colors.grey.shade100,
