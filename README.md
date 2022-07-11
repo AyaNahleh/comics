@@ -18,3 +18,5 @@ about requirements:
 -user can share the comics with other(as image not as a link).
 
 -the app wil automatic update when new comic is published, i try to build the notifications but it was little bit tricky.
+
+-i used Provider to state management, but it's break with me by saying the listing property should be false, even when i'm put it false it still break so i had to go with setState which i don't think it's good 
